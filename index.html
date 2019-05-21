@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bitimage</title>
-    <script type="text/javascript" src="bitcoinjs.min.js"></script>
+    <title>groestlimage</title>
+    <script type="text/javascript" src="groestlcoinjs.min.js"></script>
     <script type="text/javascript" src="bip32.min.js"></script>
     <script type="text/javascript" src="bip39.min.js"></script>
     <script type="text/javascript" src="bigi.min.js"></script>
@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-    <h1>A picture is worth a thousand satoshis</h1>
+    <h1>A picture is worth a thousand groestls</h1>
 </header>
 <article>
     <h2>Turn Any Image, Document or Audio File Into A BIP39 Mnemonic</h2>
@@ -22,7 +22,7 @@
     </p>
     <label for="files">2) Select a file you would like to turn into a Mnemonic Phrase:</label>
     <input id="files" type="file" multiple/>
-    <p><a href="https://github.com/coreyphillips/bitimage" target='_blank' style="text-decoration: none;color:#29bb9c">View on GitHub</a></p>
+    <p><a href="https://github.com/Groestlcoin/groestlimage" target='_blank' style="text-decoration: none;color:#29bb9c">View on GitHub</a></p>
     <output id="result"/>
 </article>
 </body>
@@ -144,28 +144,28 @@
 						if (file.includes("data:audio/x-")) file = picFile.result.replace("data:audio/x-", "data:audio/");
 
 						//Create SHA256 hash of the file
-						var hash = Bitcoin.crypto.sha256(file);
+						var hash = groestlcoin.crypto.sha256(file);
 
 						//Create Private Key & Address From Hash
 						var mnemonic = bip39.entropyToMnemonic(hash);
 						bip39.mnemonicToSeed(mnemonic, passphrase)
 							.then(function (seed) {
-								var root = bip32.fromSeed(seed, Bitcoin.networks.bitcoin);
+								var root = bip32.fromSeed(seed, groestlcoin.networks.bitcoin);
 
 								//Setup Key Derivation Paths
-								var p2shAddressPath = `m/49'/0'/0'/0/0`;
-								var bech32AddressPath = `m/84'/0'/0'/0/0`;
+								var p2shAddressPath = `m/49'/17'/0'/0/0`;
+								var bech32AddressPath = `m/84'/17'/0'/0/0`;
 
 								//Get keypairs based on key derivation paths
 								var p2shKeypair = root.derivePath(p2shAddressPath);
 								var bech32Keypair = root.derivePath(bech32AddressPath);
 
 								//Get p2sh & p2wpkh addresses
-								var p2sh = Bitcoin.payments.p2sh({
-									redeem: Bitcoin.payments.p2wpkh({pubkey: p2shKeypair.publicKey})
+								var p2sh = groestlcoin.payments.p2sh({
+									redeem: groestlcoin.payments.p2wpkh({pubkey: p2shKeypair.publicKey})
 								});
 								var p2shAddress = p2sh.address;
-								var bech32 = Bitcoin.payments.p2wpkh({pubkey: bech32Keypair.publicKey});
+								var bech32 = groestlcoin.payments.p2wpkh({pubkey: bech32Keypair.publicKey});
 								var bech32Address = bech32.address;
 
 								//Setup QRCode
@@ -185,7 +185,7 @@
 								var div = document.createElement("div");
 
 								//Create & Set Address URLs
-								var url = "https://blockstream.info/address/";
+								var url = "https://chainz.cryptoid.info/grs/address.dws?";
 								var p2shURL = url + p2shAddress;
 								var bech32URL = url + bech32Address;
 
