@@ -7,7 +7,7 @@ Please be warned, this project was created for fun as a proof-of-concept and has
 This project turns any file into a mnemonic phrase allowing users to generate Groestlcoin private keys and addresses based on the data URI of the provided file.
 
 #### Demo Site
-- https://groestlimage.groestlcoin.org
+- https://groestlcoin.org/groestlimage/
 
 #### Setup
 - Download or clone the [repo.](https://github.com/Groestlcoin/groestlimage)
